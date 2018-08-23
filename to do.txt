@@ -1,0 +1,3 @@
+QUESTIONS
+- part-time employees (3 shifts per week) can work only one shift in the weekend ?
+  modeled in Solution::canTakeShift

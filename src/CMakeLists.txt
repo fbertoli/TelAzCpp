@@ -1,5 +1,11 @@
 add_library(SOURCE_FILES
-                configParameters.cpp
-				data.cpp
-				utilities.cpp
-        employee.cpp shiftType.cpp)
+		configParameters.cpp
+		data.cpp
+		employee.cpp
+		largeNeighborhoodSearch.cpp
+		random.cc
+		randomInsertion.cpp
+		shiftType.cpp
+		solution.cpp
+		utilities.cpp
+		)

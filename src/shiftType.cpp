@@ -12,7 +12,8 @@ ShiftType::ShiftType() :
         on_weekdays_(7, true),
         number_employees_(-1),
         min_operators_(0),
-        max_operators_(100)
+        max_operators_(100000),
+        max_per_week_(0)
 {}
 
 std::ostream& operator<<(std::ostream &out, const ShiftType shift)

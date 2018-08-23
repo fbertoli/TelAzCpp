@@ -10,13 +10,17 @@
 
 using namespace std;
 
-// constructor
+
+/** ------------------------------------------------------------------------------------------------
+ * CONSTRUCTOR */
+
 Data::Data() :
 	start_date_(config_parameters.start_date_),
 	end_date_(config_parameters.end_date_),
 	employees_(),
 	shift_types_(),
-	shift_name_map_()
+	shift_name_map_(),
+	employee_name_map_()
 {
 	days_ = difftime(mktime(&end_date_), mktime(&start_date_)) / (60*60*24) + 1;
 	weeks_ = days_ / 7;
@@ -33,7 +37,9 @@ Data::Data() :
 }
 
 
-// read and parse holidays info
+
+/** ------------------------------------------------------------------------------------------------ */
+
 void Data::readHolidayFile(string file_path)
 {
 	// read
@@ -55,7 +61,8 @@ void Data::readHolidayFile(string file_path)
 }
 
 
-// read and parse employee info
+/** ------------------------------------------------------------------------------------------------ */
+
 void Data::readEmployeeFile(string file_path)
 {
 	// read
@@ -74,6 +81,7 @@ void Data::readEmployeeFile(string file_path)
 			// name
 			// TODO improve name concatenation to add space in between name and surname
 			employee.name_ = accumulate(line->begin(), line->end(), string(""));
+			employee_name_map_[employee.name_] = &(employees_.back());
 			line++;
 
 			//id
@@ -88,14 +96,15 @@ void Data::readEmployeeFile(string file_path)
 			
 			// shifts per week
 			employee.shift_per_week_ = stoi(line->back());
+			employee.full_time_ = (employee.shift_per_week_ >= 5);
 			line++;
 
 			// default unavailable map
-			employee.unavailable_= vector<map<ShiftType *, bool >>(days_, map<ShiftType *, bool >());
+			employee.unavailable_= vector<vector<bool>>(days_, vector<bool >(shift_types_.size(), false));
 			for (int i = 0; i < days_; i++)
 			{
 				for (auto it = day_available_shifts_[i].cbegin(); it!= day_available_shifts_[i].cend(); ++it)
-					employee.unavailable_[i][it->first] = not it->second; // set as unavailable the shift which cannot tke place on that day
+					employee.unavailable_[i][it->first->id_] = not it->second; // set as unavailable shifts that are not available at all on that day
 			}
 			
 			//read optional line until you find an empty line
@@ -115,7 +124,7 @@ void Data::readEmployeeFile(string file_path)
 						if ((day_number < days_) && (day_number >= 0))
 						{
 							for (auto it = day_available_shifts_[day_number].cbegin(); it!= day_available_shifts_[day_number].cend(); ++it)
-								employee.unavailable_[day_number][it->first] = true;
+								employee.unavailable_[day_number][it->first->id_] = true;
 						}
 					}
 				}
@@ -135,7 +144,7 @@ void Data::readEmployeeFile(string file_path)
 						int day_number = difftime(mktime(&day), mktime(&start_date_)) / (60 * 60 * 24);
 						if ((day_number < days_) && (day_number >= 0))
 						{
-							employee.unavailable_[day_number][shift_name_map_[shift_type]] = true;
+							employee.unavailable_[day_number][shift_name_map_[shift_type]->id_] = true;
 						}
 					}
 				}
@@ -146,7 +155,7 @@ void Data::readEmployeeFile(string file_path)
 					for (int i = 0; i < days_; i++)
 					{
 						for (auto it = day_available_shifts_[i].cbegin(); it!= day_available_shifts_[i].cend(); ++it)
-							employee.unavailable_[i][it->first] = true;
+							employee.unavailable_[i][it->first->id_] = true;
 					}
 					// read specific shifts
 					vector<string>::iterator token = line->begin() + 2;
@@ -158,7 +167,7 @@ void Data::readEmployeeFile(string file_path)
 						int day_of_week = translateDay(&*token);
 						for (int week = 0; week < weeks_; week++)
 						{
-							employee.unavailable_[week*7 + day_of_week][shift] = false;
+							employee.unavailable_[week*7 + day_of_week][shift->id_] = false;
 						}
 
 					}
@@ -171,6 +180,9 @@ void Data::readEmployeeFile(string file_path)
 		++line;
 	}
 }
+
+/** ------------------------------------------------------------------------------------------------ */
+
 
 
 void Data::readShiftFile(string file_path) {
@@ -229,17 +241,26 @@ void Data::readShiftFile(string file_path) {
 				if (token->compare("minimo_operatori") == 0)
 				{
 					advance(token, 2);
+					removeChar(&*token, ',');
 					shift -> min_operators_ = stoi(*token);
 				}
 				else if (token->compare("massimo_operatori") == 0)
 				{
 					advance(token, 2);
+					removeChar(&*token, ',');
 					shift -> max_operators_ = stoi(*token);
 				}
 				else if (token->compare("numero_operatori") == 0)
 				{
 					advance(token, 2);
+					removeChar(&*token, ',');
 					shift -> number_employees_ = stoi(*token);
+				}
+				else if (token->compare("per_settimana") == 0)
+				{
+					advance(token, 2);
+					removeChar(&*token, ',');
+					shift -> max_per_week_ = stoi(*token);
 				}
 				else if (token->compare("giorni") == 0)
 				{
@@ -278,12 +299,18 @@ void Data::readShiftFile(string file_path) {
 
 }
 
+
+/** ------------------------------------------------------------------------------------------------ */
+
+
 void Data::createAdjacencyMatrix()
 {
+    // TODO implement the creation of the adjacency matrix
 }
 
 
-// PRINTING
+/** ------------------------------------------------------------------------------------------------
+ * PRINTING */
 void Data::printEmployees() {
 	cout << "employees: " << endl;
 	for (auto employee : employees_)
@@ -291,6 +318,9 @@ void Data::printEmployees() {
 		cout << employee << endl << endl;
 	}
 }
+
+/** ------------------------------------------------------------------------------------------------ */
+
 
 void Data::printInfo()
 {
@@ -313,6 +343,9 @@ void Data::printInfo()
 	}
 	cout << endl;
 }
+
+/** ------------------------------------------------------------------------------------------------ */
+
 
 void Data::printShiftTypes()
 {
@@ -340,4 +373,16 @@ void Data::printShiftTypes()
 		cout << endl;
 	}
 
+}
+
+/** ------------------------------------------------------------------------------------------------ */
+
+
+
+tm Data::getDate(int day)
+{
+    tm date = start_date_;
+    date.tm_mday += day;
+    mktime(&date);
+    return date;
 }

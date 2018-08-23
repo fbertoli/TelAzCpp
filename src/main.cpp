@@ -3,6 +3,7 @@
 #include <string>
 #include "configParameters.h"
 #include "data.h"
+#include "solution.h"
 
 using namespace std;
 
@@ -15,5 +16,7 @@ int main()
 	cout << endl;
 	data.printEmployees();
 	cout << endl;
+
+    Solution solution(&data);
 	return 0;
 }

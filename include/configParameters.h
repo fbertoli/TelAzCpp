@@ -14,6 +14,7 @@ public:
 	const std::tm start_date_;
 	const std::tm end_date_;
 	const int min_rest_hours_;
+	const int max_weekends_in_a_row_;
 };
 
 // The global that you will use to fetch the configurations during runtime.

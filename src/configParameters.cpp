@@ -23,6 +23,7 @@ string file_employee;
 tm start_date;
 tm end_date;
 int min_rest_hours;
+int max_weekends_in_a_row;
 
 // keep track if we have already read the file
 bool already_read_file = false;
@@ -101,6 +102,11 @@ void readConfigFile(const string & file_path)
 		{
 			min_rest_hours = stoi(line.back());
 		}
+		// parse max_weekends_in_a_row
+		else if (line[0].compare("weekend") == 0 && line[1].compare("di") == 0 && line[1].compare("fila") == 0)
+		{
+			max_weekends_in_a_row = stoi(line.back());
+		}
 	}
 
 }
@@ -116,6 +122,8 @@ int getIntConfigVar(const string & config_file_path, string var_name)
 	// return variable value
 	if (var_name.compare("min_rest_hours_") == 0)
 		return min_rest_hours;
+	else if (var_name.compare("max_weekends_in_a_row") == 0)
+		return max_weekends_in_a_row;
 	return 0; // default return
 }
 
@@ -160,6 +168,7 @@ ConfigParameters::ConfigParameters(const std::string & file_path) :
 	file_employee_(getStringConfigVar(file_path, "file_employee_")),
 	start_date_(getDateConfigVar(file_path, "start_date_")),
 	end_date_(getDateConfigVar(file_path, "end_date_")),
-	min_rest_hours_(getIntConfigVar(file_path, "min_rest_hours_"))
+	min_rest_hours_(getIntConfigVar(file_path, "min_rest_hours_")),
+	max_weekends_in_a_row_(getIntConfigVar(file_path, "max_weekends_in_a_row"))
 {
 }

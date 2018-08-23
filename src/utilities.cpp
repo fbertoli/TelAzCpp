@@ -4,6 +4,8 @@
 #include <sstream>
 #include <iterator>
 #include <iostream>
+#include <algorithm>
+#include <numeric>
 
 
 using namespace std;
@@ -20,6 +22,33 @@ void removeChar(string *str, char c) {
 	*pw = '\0';
 	*str = string(cstr);
 }
+
+/** ------------------------------------------------------------------------------------------------ */
+
+string join(vector<string> vec, string delimiter)
+{
+    return accumulate(vec.begin(), vec.end(), string(),
+                      [delimiter](string &ss, string &s)
+                      {
+                          return ss.empty() ? s : ss + delimiter + s;
+                      });
+}
+
+/** ------------------------------------------------------------------------------------------------ */
+
+string format(double d, int n) {
+	std::ostringstream oss;
+	oss << d;
+	return format(oss.str(), n);
+}
+
+/** ------------------------------------------------------------------------------------------------ */
+string format(int d, int n) {
+	std::ostringstream oss;
+	oss << d;
+	return format(oss.str(), n);
+}
+
 
 // read file and return lines (throw excpetion if file cannot be open)
 vector<vector<string>> readLinesFile(string file_path)
@@ -45,7 +74,7 @@ vector<vector<string>> readLinesFile(string file_path)
 }
 
 //printing
-std::string printDate(const tm &date) {return  to_string(date.tm_mday) + "/" + to_string(date.tm_mon+1)  + "/" + to_string(date.tm_year + 1900);}
+std::string printDate(const tm &date) {return  to_string(date.tm_mday) + "/" + to_string(date.tm_mon+1)  + "/" + to_string(date.tm_year + 1900 - 2000);}
 std::string printTime(const tm &time) {return  to_string(time.tm_hour) + ":" + ((time.tm_min < 10) ? "0" : "" ) + to_string(time.tm_min);}
 
 

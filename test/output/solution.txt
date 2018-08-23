@@ -1,0 +1,355 @@
+TIMETABLE
+DAY 0
+ giorno     : PippoP
+ sera       : MisterCCNL
+ notte      : GiuliaG
+ intermedio : SilviaS
+DAY 1
+ giorno     : GiuliaG
+ sera       : SilviaS
+ notte      : FedericoF
+ intermedio : MisterCCNL
+DAY 2
+ giorno     : GiuliaG
+ sera       : AndreaA
+ notte      : MisterCCNL
+ intermedio : FrancoF
+DAY 3
+ giorno     : GiuliaG
+ sera       : MarioM
+ notte      : FrancoF
+ intermedio : MisterCCNL
+DAY 4
+ giorno     : FedericoF
+ sera       : GiuliaG
+ notte      : SilviaS
+ intermedio : FrancoF
+DAY 5
+ giorno     : AndreaA
+ sera       : FedericoF
+ notte      : FrancoF
+DAY 6
+ giorno     : AndreaA
+ sera       : FrancoF
+ notte      : MarioM
+DAY 7
+ giorno     : SilviaS
+ sera       : PippoP
+ notte      : FedericoF
+ intermedio : MisterCCNL
+DAY 8
+ giorno     : SilviaS
+ sera       : MarioM
+ notte      : FrancoF
+ intermedio : GiuliaG
+DAY 9
+ giorno     : GiuliaG
+ sera       : FrancoF
+ notte      : MisterCCNL
+ intermedio : FedericoF
+DAY 10
+ giorno     : PippoP
+ sera       : MisterCCNL
+ notte      : AndreaA
+ intermedio : FrancoF
+DAY 11
+ giorno     : GiuliaG
+ sera       : FedericoF
+ notte      : MarioM
+ intermedio : MisterCCNL
+DAY 12
+ giorno     : MisterCCNL
+ sera       : AndreaA
+ notte      : GiuliaG
+DAY 13
+ giorno     : AndreaA
+ sera       : GiuliaG
+ notte      : SilviaS
+DAY 14
+ giorno     : MarioM
+ sera       : PippoP
+ notte      : SilviaS
+ intermedio : MisterCCNL
+DAY 15
+ giorno     : GiuliaG
+ sera       : MarioM
+ notte      : AndreaA
+ intermedio : SilviaS
+DAY 16
+ giorno     : MarioM
+ sera       : FedericoF
+ notte      : GiuliaG
+ intermedio : PippoP
+DAY 17
+ giorno     : FedericoF
+ sera       : SilviaS
+ notte      : FrancoF
+ intermedio : MisterCCNL
+DAY 18
+ giorno     : AndreaA
+ sera       : GiuliaG
+ notte      : MisterCCNL
+ intermedio : FrancoF
+DAY 19
+ giorno     : FrancoF
+ sera       : MisterCCNL
+ notte      : AndreaA
+DAY 20
+ giorno     : FrancoF
+ sera       : FedericoF
+ notte      : MarioM
+DAY 21
+ giorno     : PippoP
+ sera       : MarioM
+ notte      : MisterCCNL
+ intermedio : GiuliaG
+DAY 22
+ giorno     : MisterCCNL
+ sera       : FrancoF
+ notte      : MarioM
+ intermedio : SilviaS
+DAY 23
+ giorno     : FedericoF
+ sera       : MisterCCNL
+ notte      : FrancoF
+ intermedio : SilviaS
+DAY 24
+ giorno     : FedericoF
+ sera       : AndreaA
+ notte      : MisterCCNL
+ intermedio : GiuliaG
+DAY 25
+ giorno     : FrancoF
+ sera       : GiuliaG
+ notte      : AndreaA
+ intermedio : FedericoF
+DAY 26
+ giorno     : FrancoF
+ sera       : SilviaS
+ notte      : MisterCCNL
+DAY 27
+ giorno     : AndreaA
+ sera       : FrancoF
+ notte      : GiuliaG
+DAY 28
+ giorno     : FedericoF
+ sera       : MarioM
+ notte      : MisterCCNL
+ intermedio : FrancoF
+DAY 29
+ giorno     : MarioM
+ sera       : FrancoF
+ notte      : AndreaA
+ intermedio : GiuliaG
+DAY 30
+ giorno     : GiuliaG
+ sera       : MisterCCNL
+ notte      : SilviaS
+ intermedio : PippoP
+DAY 31
+ giorno     : MisterCCNL
+ sera       : SilviaS
+ notte      : GiuliaG
+ intermedio : MarioM
+DAY 32
+ giorno     : MarioM
+ sera       : SilviaS
+ notte      : FedericoF
+ intermedio : FrancoF
+DAY 33
+ giorno     : MisterCCNL
+ sera       : FedericoF
+ notte      : MarioM
+DAY 34
+ giorno     : MisterCCNL
+ sera       : AndreaA
+ notte      : FrancoF
+
+
+PERSONAL SCHEDULE
+SilviaS
+ - week 0 -
+  2/4/18  : intermedio
+  3/4/18  : sera
+  6/4/18  : notte
+ - week 1 -
+  9/4/18  : giorno
+  10/4/18 : giorno
+  15/4/18 : notte
+ - week 2 -
+  16/4/18 : notte
+  17/4/18 : intermedio
+  19/4/18 : sera
+ - week 3 -
+  24/4/18 : intermedio
+  25/4/18 : intermedio
+  28/4/18 : sera
+ - week 4 -
+  2/5/18  : notte
+  3/5/18  : sera
+  4/5/18  : sera
+
+PippoP
+ - week 0 -
+  2/4/18  : giorno
+ - week 1 -
+  9/4/18  : sera
+  12/4/18 : giorno
+ - week 2 -
+  16/4/18 : sera
+  18/4/18 : intermedio
+ - week 3 -
+  23/4/18 : giorno
+ - week 4 -
+  2/5/18  : intermedio
+
+MarioM
+ - week 0 -
+  5/4/18  : sera
+  8/4/18  : notte
+ - week 1 -
+  10/4/18 : sera
+  13/4/18 : notte
+ - week 2 -
+  16/4/18 : giorno
+  17/4/18 : sera
+  18/4/18 : giorno
+  22/4/18 : notte
+ - week 3 -
+  23/4/18 : sera
+  24/4/18 : notte
+ - week 4 -
+  30/4/18 : sera
+  1/5/18  : giorno
+  3/5/18  : intermedio
+  4/5/18  : giorno
+  5/5/18  : notte
+
+AndreaA
+ - week 0 -
+  4/4/18  : sera
+  7/4/18  : giorno
+  8/4/18  : giorno
+ - week 1 -
+  12/4/18 : notte
+  14/4/18 : sera
+  15/4/18 : giorno
+ - week 2 -
+  17/4/18 : notte
+  20/4/18 : giorno
+  21/4/18 : notte
+ - week 3 -
+  26/4/18 : sera
+  27/4/18 : notte
+  29/4/18 : giorno
+ - week 4 -
+  1/5/18  : notte
+  6/5/18  : sera
+
+MisterCCNL
+ - week 0 -
+  2/4/18  : sera
+  3/4/18  : intermedio
+  4/4/18  : notte
+  5/4/18  : intermedio
+ - week 1 -
+  9/4/18  : intermedio
+  11/4/18 : notte
+  12/4/18 : sera
+  13/4/18 : intermedio
+  14/4/18 : giorno
+ - week 2 -
+  16/4/18 : intermedio
+  19/4/18 : intermedio
+  20/4/18 : notte
+  21/4/18 : sera
+ - week 3 -
+  23/4/18 : notte
+  24/4/18 : giorno
+  25/4/18 : sera
+  26/4/18 : notte
+  28/4/18 : notte
+ - week 4 -
+  30/4/18 : notte
+  2/5/18  : sera
+  3/5/18  : giorno
+  5/5/18  : giorno
+  6/5/18  : giorno
+
+FedericoF
+ - week 0 -
+  3/4/18  : notte
+  6/4/18  : giorno
+  7/4/18  : sera
+ - week 1 -
+  9/4/18  : notte
+  11/4/18 : intermedio
+  13/4/18 : sera
+ - week 2 -
+  18/4/18 : sera
+  19/4/18 : giorno
+  22/4/18 : sera
+ - week 3 -
+  25/4/18 : giorno
+  26/4/18 : giorno
+  27/4/18 : intermedio
+ - week 4 -
+  30/4/18 : giorno
+  4/5/18  : notte
+  5/5/18  : sera
+
+GiuliaG
+ - week 0 -
+  2/4/18  : notte
+  3/4/18  : giorno
+  4/4/18  : giorno
+  5/4/18  : giorno
+  6/4/18  : sera
+ - week 1 -
+  10/4/18 : intermedio
+  11/4/18 : giorno
+  13/4/18 : giorno
+  14/4/18 : notte
+  15/4/18 : sera
+ - week 2 -
+  17/4/18 : giorno
+  18/4/18 : notte
+  20/4/18 : sera
+ - week 3 -
+  23/4/18 : intermedio
+  26/4/18 : intermedio
+  27/4/18 : sera
+  29/4/18 : notte
+ - week 4 -
+  1/5/18  : intermedio
+  2/5/18  : giorno
+  3/5/18  : notte
+
+FrancoF
+ - week 0 -
+  4/4/18  : intermedio
+  5/4/18  : notte
+  6/4/18  : intermedio
+  7/4/18  : notte
+  8/4/18  : sera
+ - week 1 -
+  10/4/18 : notte
+  11/4/18 : sera
+  12/4/18 : intermedio
+ - week 2 -
+  19/4/18 : notte
+  20/4/18 : intermedio
+  21/4/18 : giorno
+  22/4/18 : giorno
+ - week 3 -
+  24/4/18 : sera
+  25/4/18 : notte
+  27/4/18 : giorno
+  28/4/18 : giorno
+  29/4/18 : sera
+ - week 4 -
+  30/4/18 : intermedio
+  1/5/18  : sera
+  4/5/18  : intermedio
+  6/5/18  : notte
+

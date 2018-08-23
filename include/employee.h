@@ -27,11 +27,14 @@ public:
 	// whether he/she has a ccnl contract
 	bool ccnl_;
 
+	// whether is a full-time employee
+	bool full_time_;
+
 	// how many shift per week he/she has to do
 	int shift_per_week_;
 
-	// defined unavailabilities. [day][shift_type] = bool
-	std::vector<std::map<ShiftType *, bool >> unavailable_;
+	// define unavailabilities. [day][shift.id] = bool
+	std::vector<std::vector<bool >> unavailable_;
 
 
 };

@@ -1,6 +1,6 @@
 turni.txt
 OBBLIGATORI
-<nome> <ora_inizio> <ora_fine> [minimo_operatori] [massimo_operatori] [numero_operatori]
+<nome> <ora_inizio> <ora_fine> [minimo_operatori] [massimo_operatori] [numero_operatori] [per_settimana]
 
 INTERMEDI
 <nome> <ora_inizio> <ora_fine> [giorni] [escluso] [numero_operatori] [massimo_operatori]

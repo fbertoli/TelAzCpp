@@ -23,4 +23,5 @@ public:
     int number_employees_;	// if not 0, the number of employees to have in this turn
     int min_operators_;		// if not 0, the minimum number of employees to be assigned to this turn
     int max_operators_;		// if not 0, the maximum number of employees to be assigned to this turn
+    int max_per_week_;      // if not 0, the max number of times an employee can take the shift on a week
 };
