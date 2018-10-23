@@ -24,4 +24,8 @@ ostream& operator<< (ostream &out, const Employee &employee)
 
     return out;
 }
- 
+
+
+/** comparison operator */
+bool operator== (const Employee &e1, const Employee &e2) { return e1.id_ == e2.id_; }
+bool operator!= (const Employee &e1, const Employee &e2) { return e1.id_ != e2.id_; }

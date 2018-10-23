@@ -7,6 +7,7 @@
 #include <iostream>
 #include <sstream>
 #include <iomanip>
+#include <string>
 
 using namespace std;
 
@@ -81,7 +82,6 @@ void Data::readEmployeeFile(string file_path)
 			// name
 			// TODO improve name concatenation to add space in between name and surname
 			employee.name_ = accumulate(line->begin(), line->end(), string(""));
-			employee_name_map_[employee.name_] = &(employees_.back());
 			line++;
 
 			//id
@@ -179,6 +179,10 @@ void Data::readEmployeeFile(string file_path)
 		}
 		++line;
 	}
+
+	// add to map
+	for (auto &em : employees_)
+		employee_name_map_[string(em.name_)] = &em;
 }
 
 /** ------------------------------------------------------------------------------------------------ */

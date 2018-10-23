@@ -16,6 +16,10 @@ public:
 	// METHODS
     friend std::ostream& operator<< (std::ostream &out, const Employee &employee);
 
+	/** comparison operator */
+	friend bool operator== (const Employee &e1, const Employee &e2);
+	friend bool operator!= (const Employee &e1, const Employee &e2);
+
     // VARIABLES
 public:
 	// name of employee

@@ -28,3 +28,7 @@ std::ostream& operator<<(std::ostream &out, const ShiftType shift)
     out << "\tnumber employees = (" << shift.number_employees_ << ", " << shift.min_operators_ << ", " << shift.max_operators_ << ")" << endl;
     return out;
 }
+
+/** comparison operator */
+bool operator== (const ShiftType &s1, const ShiftType &s2) {return s1.id_ == s2.id_;}
+bool operator!= (const ShiftType &s1, const ShiftType &s2) {return s1.id_ != s2.id_;}

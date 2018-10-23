@@ -1,9 +1,11 @@
 #include "solution.h"
 #include "configParameters.h"
+#include "utilities.h"
 #include <algorithm>
 #include <cassert>
 #include <fstream>
 #include <string>
+#include <algorithm>
 
 using namespace std;
 
@@ -92,7 +94,6 @@ void Solution::assignShift(Employee *employee, int day, ShiftType *shift)
 
 	// add to timetable if not already there
 	vector<Employee *> &vec = timetable_[day][shift->id_];
-	cout << int(vec.size()) << ", " << int(timetable_[day][shift->id_].size()) << endl;
 	if (vec.empty() or find(vec.begin(), vec.end(), employee) != vec.end())
 		timetable_[day][shift->id_].push_back(employee);
 
@@ -128,7 +129,7 @@ void Solution::write(std::string file_name, std::vector<Cost *> *costs)
 		for (auto it = data_->day_available_shifts_[day].cbegin(); it !=  data_->day_available_shifts_[day].cend(); it++)
 		{
 			if (it->second) {
-				out_file << indent << format(it->first->name_, 11) << ": ";
+				out_file << indent << format(it->first->name_, 11);
 				out_file << accumulate(timetable_[day][it->first->id_].begin(), timetable_[day][it->first->id_].end(), string(),
 								   [](string &ss, Employee *e)
 								   {
@@ -149,7 +150,7 @@ void Solution::write(std::string file_name, std::vector<Cost *> *costs)
 				out_file << indent << "- " << "week " << day / 7 << " -" << endl;
 			if (schedule_[employee.id_][day])
 			{
-				out_file << indent << indent << format(printDate(data_->getDate(day)), 8) << ": " << schedule_[employee.id_][day]->name_ << endl;
+				out_file << indent << indent << format(printDate(data_->getDate(day)), 8) << schedule_[employee.id_][day]->name_ << endl;
 			}
 		}
 		out_file << endl;
@@ -172,37 +173,200 @@ void Solution::read(string file_name)
 	// parse
 	vector<vector<string>>::iterator line = lines.begin();
 	while (line != lines.end()) {
-		if (line.empty())
+		if (line->empty())
 			continue;
 
 		if (line->at(0).compare("TIMETABLE") == 0)
 		{
 			++line;
-			while (line != lines.end())
+			while (true)
 			{
-				if (line->at(0).compare("DAY") == 0)
+				if (line->empty())
+					break;
+				else if (line->at(0).compare("DAY") == 0)
 					day = stoi(line->back());
 				else
 				{
-					shift = data_->shift_name_map_[removeChar(&(line->at(0))];
-					employee = data_->employee_name_map_[removeChar(&(line->at(2))];
+					shift = data_->shift_name_map_[line->at(0)];
+					for (int i =1; i < line->size(); i++)
+					{
+						removeChar(&line->at(i), ',');
+						timetable_[day][shift->id_].push_back(data_->employee_name_map_[line->at(i)]);
+					}
 				}
 				++line;
 			}
+
+			createScheduleFromTimetable();
+			return;
+		}
+		else if (line->at(0).compare("PERSONAL") == 0 and line->at(1).compare("SCHEDULE") == 0)
+		{
+			++line;
+			while (line != lines.end())
+			{
+				// read employee
+				employee = data_->employee_name_map_[line->at(0)];
+				++line;
+
+				// read schedule
+				while (!line->empty())
+				{
+					if (line->at(1).compare("week") == 0)
+						++line;
+
+					// read day
+					tm date;
+					readDate(&line->at(0), &date);
+
+					// read shift
+					shift = data_->shift_name_map_[line->at(1)];
+
+					schedule_[employee->id_][data_->getDay(&date)] = shift;
+					++line;
+				}
+				++line;
+			}
+
+			createFromSchedule(true);
+			return;
 		}
 		++line;
 	}
-
-	for (auto &line : lines) {
-		if (line.size() == 0)
-			continue;
-		if ()
-		removeChar(&line.front(), ',');
-	}
-
-
 }
 
+
+
+/** ------------------------------------------------------------------------------------------------ */
+
+bool operator==(const Solution &s1, const Solution &s2)
+{
+	// only compare schedule
+	for (int e = 0; e < s1.data_->employees_.size(); e++)
+	{
+		for (int d = 0; d < s1.data_->days_; d++)
+		{
+			if (s1.schedule_[e][d])
+			{
+				if (s2.schedule_[e][d] and (s1.schedule_[e][d]->id_ != s2.schedule_[e][d]->id_) )
+					return false;
+				else
+					return false;
+			}
+			else if (s2.schedule_[e][d])
+				return false;
+		}
+	}
+	return true;
+}
+
+
+bool operator!=(const Solution &s1, const Solution &s2)
+{
+	return !(s1 == s2);
+}
+
+/** ------------------------------------------------------------------------------------------------ */
+
+bool Solution::checkConsistency()
+{
+	ShiftType *shift;
+	Employee *employee;
+	bool found;
+	// compare schedule to timetable_
+	for (int e = 0; e < data_->employees_.size(); e++)
+	{
+		employee = &data_->employees_[e];
+		for (int d = 0; d < data_->days_; d++)
+		{
+			shift = schedule_[e][d];
+			if (shift)
+			{
+				// find element by id_
+				found = false;
+				for (auto em: timetable_[d][shift->id_]) {
+					if (em->id_ == employee->id_) {
+						found = true;
+						break;
+					}
+				}
+				if (!found)
+					return false;
+			}
+		}
+	}
+
+	// compare timetable to schedule
+	for (int d = 0; d < data_->days_; d++)
+	{
+		for (auto s : data_->shift_types_)
+		{
+			for (auto em : timetable_[d][s.id_])
+				if ((!schedule_[em->id_][d] ) or schedule_[em->id_][d]->id_ != s.id_)
+					return false;
+		}
+	}
+	return true;
+}
+
+/** ------------------------------------------------------------------------------------------------ */
+
+void Solution::createScheduleFromTimetable()
+{
+	int day,shift_id;
+	ShiftType *shift;
+	for (auto it = timetable_.begin(); it!= timetable_.end(); ++it)
+	{
+		day = distance(timetable_.begin(), it);
+		for (auto it2 = it->begin(); it2 != it->end(); it2++)
+		{
+			shift_id = distance(it->begin(), it2);
+			shift = &data_->shift_types_[shift_id];
+
+			// update schedule
+			for (auto &em : *it2)
+				schedule_[em->id_][day] = shift;
+
+		}
+	}
+	createFromSchedule(false);
+}
+
+
+/** ------------------------------------------------------------------------------------------------ */
+
+void Solution::createFromSchedule(bool timetable_already_done)
+{
+	// reset variables
+	if (!timetable_already_done)
+		timetable_ = vector<vector<vector<Employee*>>>(data_->days_, vector<vector<Employee*>>(data_->shift_types_.size(), vector<Employee *>()));
+	weekends_ = vector<vector<int>>(data_->employees_.size(), vector<int>(data_->weeks_, 0));
+	shift_count_ = vector<vector<vector<int>>>(data_->employees_.size(), vector<vector<int>>(data_->weeks_, vector<int>(data_->shift_types_.size(),0)));
+	available_shifts_ = vector<vector<int>>(data_->employees_.size(),vector<int>(data_->weeks_, 0));
+
+	// populate
+	Employee *employee;
+	ShiftType *shift;
+	for (int e = 0; e < schedule_.size(); e++)
+	{
+		employee = &data_->employees_[e];
+		for (int day = 0; day < data_->days_; day++)
+		{
+			if (schedule_[e][day])
+			{
+				shift = schedule_[e][day];
+				if (!timetable_already_done)
+					timetable_[day][shift->id_].push_back(employee);
+				 if (isOnWeekend(day))
+					 weekends_[e][getWeek(day)]++;
+				shift_count_[e][getWeek(day)][shift->id_]++;
+			}
+
+			if (day % 7 == 6)
+				available_shifts_[e][getWeek(day)] = employee->shift_per_week_ - accumulate(shift_count_[e][getWeek(day)].cbegin(), shift_count_[e][getWeek(day)].cend(), 0);
+		}
+	}
+}
 
 /** ------------------------------------------------------------------------------------------------
  * CHECKING */

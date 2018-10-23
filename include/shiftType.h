@@ -13,6 +13,10 @@ public:
 public:
     friend std::ostream& operator<<(std::ostream &out, const ShiftType shift);
 
+    /** comparison operator */
+    friend bool operator== (const ShiftType &s1, const ShiftType &s2);
+    friend bool operator!= (const ShiftType &s1, const ShiftType &s2);
+
     // VARIABLES
 public:
     int id_; 				// equals the position of shift_type in data.shift_types_

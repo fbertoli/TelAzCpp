@@ -31,6 +31,9 @@ public:
     /** get the actual date */
     std::tm getDate(int day);
 
+    /** get the day from the actual date */
+    int getDay(tm *date) {return difftime(mktime(date), mktime(&start_date_)) / (60 * 60 * 24);}
+
 	// printing
 	void printEmployees();
 	void printInfo();

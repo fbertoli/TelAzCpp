@@ -41,6 +41,18 @@ public:
 	/** read a solution from file */
 	void read(std::string file_name);
 
+	/** populate the schedule from the timetable */
+	void createScheduleFromTimetable();
+
+	/** populate all variables from schedule. do't populate timetable if */
+	void createFromSchedule(bool timetable_already_done = false);
+
+	/** comparison operator */
+	friend bool operator== (const Solution &s1, const Solution &s2);
+	friend bool operator!= (const Solution &c1, const Solution &s2);
+
+
+
 	/** write the Solution to the specified file */
     void write(std::string file_name, std::vector<Cost *> *costs = nullptr);
 
@@ -50,8 +62,8 @@ public:
     bool checkAdjacency();
     bool checkEmployeeShiftWeekly();
 
-    /** check consistency of variables */
-    bool checkConsistency() {return true;};
+    /** check consistency of schedule and timetable */
+    bool checkConsistency();
 
 
 	// VARIABLES
@@ -62,7 +74,7 @@ public:
 	// the timetable. [day][shift.id] = employees assigned to shift  (note: all shift are considered for all days, not only the available ones)
 	std::vector<std::vector<std::vector<Employee *>>> timetable_;
 
-	// the personal schedule. [employee.id_][day] = Shift_type assigned
+	// the personal schedule. [employee.id_][day] = Shift_type assigned (nullptr if nothing)
 	std::vector<std::vector<ShiftType *>> schedule_;
 
 	// [employee.id_][week] =  number of shifts employee works on the weekend
